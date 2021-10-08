@@ -1,0 +1,35 @@
+{
+  "name": "db",
+  "version": "3.0.0",
+  "description": "Disbot V3",
+  "main": "app.js",
+  "engines": {
+    "node": "16.x",
+    "npm": "7.x"
+  },
+  "scripts": {
+    "start": "node .",
+    "start:dev": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Scoooolz/db.git"
+  },
+  "author": "Scoooolzs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Scoooolz/db/issues"
+  },
+  "homepage": "https://github.com/Scoooolz/db#readme",
+  "dependencies": {
+    "discord-player": "^5.1.0",
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "ffmpeg-static": "^4.4.0",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.1",
+    "mongoose": "^6.0.8",
+    "opusscript": "^0.0.8",
+    "translate-google": "^1.5.0"
+  }
+}
