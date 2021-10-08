@@ -1,5 +1,5 @@
 const { Client, Collection } = require("discord.js");
-const { Player } = require("discord-player");
+const { Player } = require("discord-music-player");
 
 const client = new Client({
 	intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"],
@@ -10,7 +10,7 @@ client.cooldowns = new Collection();
 client.music = new Player(client, {
 	leaveOnEnd: true,
 	leaveOnStop: true,
-        leaveOnEmpty: true,
+    leaveOnEmpty: true,
 	leaveOnEmptyCooldown: 5000,
  	autoSelfDeaf: true,
   	initialVolume: 50,
