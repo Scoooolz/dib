@@ -5,26 +5,47 @@ module.exports = {
 	name: "play",
 	aliases: ["p"],
 	async execute(message, client, args) {
-		let guildQueue = client.player.getQueue(message.guild.id);
-		const command = message.content.toLowerCase();
-		if (
-			command.includes("youtu") &&
-			command.includes("/") &&
-			command.includes("playlist")
-		) {
-			let queue = client.player.createQueue(message.guild.id);
-			await queue.join(message.member.voice.channel);
-			let song = await queue.play(args.join(" ")).catch((_) => {
-				if (!guildQueue) queue.stop();
-			});
-			message.reply(`Now playing: ${song}!`)
-		} else {
-			let queue = client.player.createQueue(message.guild.id);
-			await queue.join(message.member.voice.channel);
-			let song = await queue.play(args.join(" ")).catch((_) => {
-				if (!guildQueue) queue.stop();
-			});
-			message.reply(`Now playing: ${song}!`)
+        	let voiceChannel = message.member.voice.channel;
+		if (!voiceChannel)
+			return message.reply({ content: `Sorry!, but please join a voice channel to set a music!`, ephemeral: true });
+
+		let search_Song = args.join(" ")
+		if (!search_Song) {
+			return message.reply({ content: `Sorry!, but please add an music title or music link for set a music!`, ephemeral: true});
+		} else if(search_Song.includes('/') && search_Song.includes('youtu') && search_Song.includes('playlist')) {
+			return message.reply({ content: 'Sorry!, but the music is beta and can\'t play playlist.', ephemeral: true })
 		}
+
+    
+		let queue = client.music.createQueue(message.guild.id, {
+			metadata: {
+				channel: message.channel,
+			},
+		});
+    
+		// verify vc connection
+		try {
+			if (!queue.connection) await queue.connect(voiceChannel);
+		} catch {
+			queue.destroy();
+			return await message.reply({
+				content: "Could not join your voice channel!",
+				ephemeral: true,
+			});
+		}
+
+		let song = await client.music
+		.search(search_Song, {
+				requestedBy: message.author,
+			})
+			.then((x) => x.tracks[0]);
+
+		if (!song) return message.reply({ content: `I can\'t find \`${search_Song}\`.`, ephemeral: true });
+
+		queue.play(song);
+
+		message.reply({
+			content: `⏱️ | Loading track **${song.title}**!`,
+		});
 	},
 };

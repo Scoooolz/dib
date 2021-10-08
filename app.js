@@ -1,5 +1,5 @@
 const { Client, Collection } = require("discord.js");
-const { Player } = require("discord-music-player");
+const { Player } = require("discord-player");
 
 const client = new Client({
 	intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES"],

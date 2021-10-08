@@ -50,8 +50,7 @@ module.exports = {
 						`Requested By ${message.author.tag}`,
 						message.author.displayAvatarURL()
 					);
-				message.channel.send(`${message.author},`);
-				message.reply({ embeds: [remindTimerEmbed] });
+				message.channel.send({ embeds: [remindTimerEmbed], ephemeral: true});
 			}, time);
 		}
 	},
